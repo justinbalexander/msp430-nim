@@ -75,3 +75,4 @@ tags
 mspdebug
 mspdebug.man
 gcc/
+*.lst
