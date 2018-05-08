@@ -1,11 +1,13 @@
+import msp430
+
 template sfrb*(nam: untyped, loc: untyped) =
-  const nam*: ptr uint8 = cast[ptr uint8](loc)
+  const nam*: SFRb = SFRb(cast[ptr uint8](loc))
 
 template sfrw*(nam: untyped, loc: untyped) =
-  const nam*: ptr uint16 = cast[ptr uint16](loc)
+  const nam*: SFRw = SFRw(cast[ptr uint16](loc))
 
 template sfra*(nam: untyped, loc: untyped) =
-  const nam*: ptr uint16 = cast[ptr uint16](loc)
+  const nam*: SFRa = SFRa(cast[ptr uint16](loc))
 
 template const_sfrb*(nam,loc) = sfrb(nam,loc)
 template const_sfrw*(nam,loc) = sfrw(nam,loc)
