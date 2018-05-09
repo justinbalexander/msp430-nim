@@ -76,3 +76,4 @@ mspdebug
 mspdebug.man
 gcc/
 *.lst
+gdb_agent_console.log

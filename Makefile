@@ -32,10 +32,10 @@ listing: main
 	$(ELF_PREFIX)size main.elf >> asm.lst
 
 debugserver:
-	$(GDB_CONSOLE) $(MSP430_DAT) &> ./gdb_agent_console.log &
+	LD_LIBRARY_PATH=./gcc/bin/ $(GDB_CONSOLE) $(MSP430_DAT) &> ./gdb_agent_console.log &
 	
 debug:
-	$(ELF_PREFIX)gdb main.elf -ex "target remote :55000"
+	LD_LIBRARY_PATH=./gcc/bin/ $(ELF_PREFIX)gdb main.elf -ex "target remote :55000"
 
 ezFetToTILib:
 	sudo LD_LIBRARY_PATH=./gcc/bin/ ./mspdebug tilib --allow-fw-update

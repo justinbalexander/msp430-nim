@@ -34,10 +34,7 @@ make ezFetToTILib
 ```
 
 Uses mspdebug to update the firmware on the Launchpad ezFet emulator to
-be more like the MSPFET430UIF JTAG probe. mspdebug and the tilib driver
-were the only way to program the board that I could get to work. The 
-`gdb_agent_console` seemed to only partially program the board or the
-data it returned was incorrect. mspdebug worked using the tilib only.
+be more like the MSPFET430UIF JTAG probe. mspdebug worked using the tilib only.
 
 Solution discovered at:
 https://www.pabigot.com/msp430/exp430fr5969-launchpad-first-experiences/
@@ -49,9 +46,18 @@ won't apply throughout the firmware update process.
 make mspdebug
 ```
 
-Starts mspdebug and ensures that libmsp430.so (or dll if on windows) can be
-found by mspdebug. This command uses sudo currently because I haven't written
+OR (for gdb as provided by TI)
+
+```
+make debugserver
+make debug
+```
+
+Starts debug session and ensures that libmsp430.so (or dll if on windows) can be
+found by mspdebug. mspdebug uses sudo currently because I haven't written
 a udev rule yet. Feel free to do so yourself.
+
+Now gdb is working. I had forgotten to add the libmsp430.so path to the dynamic loader.
 
 # Project State
 
