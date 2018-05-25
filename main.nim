@@ -24,7 +24,6 @@ proc main {.noreturn.}=
   initPorts()
   enableInterrupts()
 
-
   while true:
     discard buf.remove()
     nop()

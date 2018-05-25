@@ -4,22 +4,19 @@ ELF_PREFIX=gcc/bin/msp430-elf-
 GDB_CONSOLE=gcc/bin/gdb_agent_console
 MSP430_DAT=gcc/msp430.dat
 
-HEADERS=msp430.nim msp430f5510.nim iomacros.nim
-CODEFILES=main.nim ring.nim Makefile
+CODEFILES=msp430.nim msp430f5510.nim iomacros.nim
+CODEFILES+=main.nim ring.nim Makefile
 
 NIMFLAGS=-d:release --os:standalone --opt:size --gc:none --deadCodeElim:on
-# avr is the closest cpu for the moment
-NIMFLAGS+=--cpu:avr
-# running one C compiler lets its errors show
-NIMFLAGS+=--parallelBuild:1 --verbosity:2
-#location of include files
-NIMFLAGS+=--passC:"-mmcu=$(MCU) -I$(SUPPORT_FILES) -g -minrt"
-NIMFLAGS+=--passL:"-mmcu=$(MCU) -L$(SUPPORT_FILES) -T $(MCU).ld -Wl,--gc-sections -Wl,-M=output.map -g -gdwarf-2 -minrt"
+NIMFLAGS+=--cpu:msp430 --cincludes:$(SUPPORT_FILES) --clibdir:$(SUPPORT_FILES)
+NIMFLAGS+=--parallelBuild:1 --verbosity:2 --embedsrc
+NIMFLAGS+=--passC:"-mmcu=$(MCU) -I$(SUPPORT_FILES) -ggdb3 -minrt"
+NIMFLAGS+=--passL:"-mmcu=$(MCU) -L$(SUPPORT_FILES) -T $(MCU).ld -Wl,--gc-sections -Wl,-M=output.map -ggdb3 -minrt"
 
 %: %.nim panicoverride.nim
 	nim c $(NIMFLAGS) -o:main.elf $<
 
-main: $(HEADERS) $(CODEFILES)
+main: $(CODEFILES)
 
 all: main
 
